@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(MaterialApp(
@@ -13,24 +14,48 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _index = 0;
+  var _lstFrases = [
+    "Não há nada que esteja ruim que não possa piorar. :(",
+    "Lutar sempre, vencer nunca! ;)",
+    "A sua vitória é a derrota de todo mundo hehehe. ;)",
+    "Lutar sempre, vencer jamais!!! :("
+  ];
+
+  void proximaFrase() {
+    int tmp = _index;
+    setState(() {
+      _index = Random().nextInt(_lstFrases.length);
+      if (tmp == _index) proximaFrase();
+    });
+    print(_index);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          AppBar(title: Text("Frases do Dia"), backgroundColor: Colors.green),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text("Frases do Dia", style: TextStyle(color: Colors.green)),
-          RaisedButton(
-            onPressed: () {},
-            color: Colors.green,
-            child: Text("Nova Frase", style: TextStyle(color: Colors.white)),
-          )
-        ],
-      ),
-    );
+        appBar:
+            AppBar(title: Text("Frases do Dia"), backgroundColor: Colors.green),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Image.asset("images/logo.png"),
+              Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(_lstFrases[_index],
+                      style: TextStyle(
+                          color: Colors.grey, fontStyle: FontStyle.italic))),
+              RaisedButton(
+                onPressed: proximaFrase,
+                color: Colors.green,
+                child:
+                    Text("Nova Frase", style: TextStyle(color: Colors.white)),
+              )
+            ],
+          ),
+        ));
   }
 }
 /*
